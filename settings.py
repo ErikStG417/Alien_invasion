@@ -4,11 +4,12 @@ class Settings:
         # initialize the game's settings
         #screen setting
         self.screen_width = 1366
-        self.screen_height = 700
+        self.screen_height =700
         self.bg_color = (230, 230, 230)
 
         # ship settings
         self.ship_speed = 5
+        self.ship_limit = 3
 
         #bullet settings
         self.bullet_speed = 6
