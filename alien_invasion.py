@@ -81,6 +81,8 @@ class AlienInvasion:
             self.settings.initialize_dynamic_settings()
             self.stats.reset_stats()
             self.sb.prep_score()
+            self.sb.prep_level()
+            self.sb.prep_ships()
             self.game_active = True
             #Hide the mouse cursor
             pygame.mouse.set_visible(False)
@@ -141,12 +143,19 @@ class AlienInvasion:
             for aliens in collisions.values():
                 self.stats.score += self.settings.alien_points * len(aliens)
                 self.sb.prep_score()
+                self.sb.check_high_score()
 
         if not self.aliens:
             #Destroy existing bullets and create new fleet.
             self.bullets.empty()
             self._create_fleet()
             self.settings.increase_speed()
+
+            # Increase level.
+            self.stats.level += 1
+            self.sb.prep_level()
+
+
 
 
 
@@ -217,8 +226,9 @@ class AlienInvasion:
         """Respond to the shop being hit by an alien."""
         #Decrement ships_left
         if self.stats.ships_left > 0:
-            # Drecrement ship_left
+            # Drecrement ship_left, and update scoreboard
             self.stats.ships_left -= 1
+            self.sb.prep_ships()
             self.bullets.empty()
             self.aliens.empty()
             self._create_fleet()
